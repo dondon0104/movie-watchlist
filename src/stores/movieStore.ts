@@ -2,14 +2,21 @@ import { computed, ref } from 'vue'
 import { loadMovies, saveMovies } from '../services/movieService'
 import type { Movie, MovieDraft } from '../types/movie'
 
-const movies = ref<Movie[]>(loadMovies())
+const movies = ref<Movie[]>([])
+const moviesLoaded = loadMovies()
+  .then((loadedMovies) => { movies.value = loadedMovies })
+  .catch((error: unknown) => { console.error('Unable to load movies from Firebase', error) })
 
 export function useMovieStore() {
   const watchedMovies = computed(() => movies.value.filter((movie) => movie.status === 'Watched'))
   const watchlistMovies = computed(() => movies.value.filter((movie) => movie.status === 'Not Watched'))
   const favoriteMovies = computed(() => movies.value.filter((movie) => movie.favorite))
 
-  function persist() { saveMovies(movies.value) }
+  function persist() {
+    void moviesLoaded.then(() => saveMovies(movies.value)).catch((error: unknown) => {
+      console.error('Unable to save movies to Firebase', error)
+    })
+  }
   function addMovie(draft: MovieDraft) {
     movies.value.unshift({ ...draft, id: crypto.randomUUID(), createdAt: new Date().toISOString(), favorite: false })
     persist()
