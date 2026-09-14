@@ -13,9 +13,17 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 }
 
-export const firebaseApp = initializeApp(firebaseConfig)
-export const database = getDatabase(firebaseApp)
+const hasFirebaseConfig = Boolean(
+  firebaseConfig.apiKey &&
+  firebaseConfig.authDomain &&
+  firebaseConfig.databaseURL &&
+  firebaseConfig.projectId &&
+  firebaseConfig.appId,
+)
 
-export const analytics = isSupported().then((supported) => {
-  return supported ? getAnalytics(firebaseApp) : undefined
-})
+export const firebaseApp = hasFirebaseConfig ? initializeApp(firebaseConfig) : undefined
+export const database = firebaseApp ? getDatabase(firebaseApp) : undefined
+
+export const analytics = firebaseApp
+  ? isSupported().then((supported) => supported ? getAnalytics(firebaseApp) : undefined)
+  : Promise.resolve(undefined)
