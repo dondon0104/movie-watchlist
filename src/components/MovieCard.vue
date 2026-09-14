@@ -1,5 +1,5 @@
 <template>
-  <ion-card class="movie-card" button @click="$emit('select', movie)">
+  <ion-card class="movie-card">
     <div class="poster-wrap">
       <img :src="movie.poster" :alt="movie.title" class="poster" />
       <ion-badge class="status-badge" :color="movie.status === 'Watched' ? 'success' : 'warning'">{{ movie.status }}</ion-badge>
@@ -10,7 +10,7 @@
     <ion-card-content>
       <ion-card-title>{{ movie.title }}</ion-card-title>
       <p class="meta">{{ movie.genre }} <span>•</span> {{ movie.releaseYear }}</p>
-      <div class="rating-row"><span class="star">★</span> {{ movie.rating.toFixed(1) }} <span class="spacer" /> <span class="view-label">View details</span></div>
+      <div class="rating-row"><span class="star">★</span> {{ movie.rating.toFixed(1) }} <span class="spacer" /><ion-button fill="clear" size="small" class="details-button" :router-link="`/movie/${movie.id}`" @click.stop>View details</ion-button></div>
     </ion-card-content>
   </ion-card>
 </template>
