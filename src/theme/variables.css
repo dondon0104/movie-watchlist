@@ -1,2 +1,18 @@
-/* For information on how to create your own theme, please refer to:
-http://ionicframework.com/docs/theming/ */
+:root {
+	--ion-color-primary: #ed4966;
+	--ion-color-primary-rgb: 237, 73, 102;
+	--ion-color-primary-contrast: #ffffff;
+	--ion-color-primary-shade: #d1405a;
+	--ion-color-primary-tint: #ef5b75;
+	--ion-color-secondary: #8b5cf6;
+	--ion-background-color: #0c0c10;
+	--ion-text-color: #f6f5f8;
+	--surface-card: #17171d;
+	--surface-border: #2a2a34;
+	--ion-font-family: 'Avenir Next', 'Trebuchet MS', sans-serif;
+}
+
+body { background: var(--ion-background-color); }
+ion-toolbar { --background: #0c0c10; --border-color: transparent; }
+ion-tab-bar { --background: #111116; --border: 1px solid var(--surface-border); }
+ion-tab-button { --color: #777783; --color-selected: #ed4966; }
